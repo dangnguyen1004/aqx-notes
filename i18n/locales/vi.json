@@ -1,0 +1,64 @@
+{
+  "common": {
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "delete": "Xóa",
+    "restore": "Khôi phục",
+    "confirm": "Xác nhận",
+    "back": "Quay lại",
+    "detail": "Chi tiết",
+    "emptyTrash": "Dọn thùng rác",
+    "noNotes": "Chưa có ghi chú"
+  },
+  "home": {
+    "title": "Trang chủ",
+    "recentlyCreated": "Ghi chú được tạo gần đây"
+  },
+  "summary": {
+    "title": "Tổng quan",
+    "totalRecords": "Chủ đề này có tổng cộng {{count}} ghi chú"
+  },
+  "newNote": {
+    "title": "Ghi chú mới",
+    "chooseCategory": "Chọn danh mục",
+    "placeholder": "Vui lòng nhập nội dung ghi chú",
+    "characterCount": "{{count}}/{{max}}"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "theme": "Giao diện",
+    "language": "Ngôn ngữ",
+    "themeLight": "Sáng",
+    "themeDark": "Tối",
+    "themeAuto": "Tự động",
+    "onlineCustomer": "Hỗ trợ trực tuyến",
+    "userAgreement": "Điều khoản sử dụng",
+    "privacyPolicy": "Chính sách bảo mật",
+    "aboutUs": "Về chúng tôi",
+    "trash": "Thùng rác",
+    "deleteAllNotes": "Xóa tất cả ghi chú",
+    "deleteAllConfirm": "Bạn có chắc chắn muốn xóa tất cả ghi chú? Chúng sẽ được chuyển vào thùng rác.",
+    "allNotesDeleted": "Tất cả ghi chú đã được xóa"
+  },
+  "trash": {
+    "title": "Thùng rác",
+    "emptyTrashConfirm": "Bạn có chắc chắn muốn xóa vĩnh viễn tất cả các mục trong thùng rác?",
+    "deleteConfirm": "Bạn có chắc chắn muốn xóa vĩnh viễn ghi chú này?",
+    "empty": "Thùng rác trống"
+  },
+  "noteDetail": {
+    "title": "Ghi chú",
+    "category": "Danh mục",
+    "createdAt": "Ngày tạo",
+    "deleteConfirm": "Bạn có chắc chắn muốn xóa ghi chú này?"
+  },
+  "categories": {
+    "workAndStudy": "Công việc và Học tập",
+    "life": "Cuộc sống",
+    "healthAndWellbeing": "Sức khỏe và Thể chất"
+  },
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt"
+  }
+}
