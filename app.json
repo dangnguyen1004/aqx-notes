@@ -29,9 +29,19 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-router",
-      "expo-localization"
-    ]
+    "plugins": ["expo-router", "expo-localization"],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8082d5c5-2b35-4b15-a805-11ca66675683"
+      }
+    },
+    "owner": "nguyen_dang",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/8082d5c5-2b35-4b15-a805-11ca66675683"
+    }
   }
 }
