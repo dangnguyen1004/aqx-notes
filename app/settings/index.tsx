@@ -1,18 +1,10 @@
-import { Ionicons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Alert,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { SettingsLink } from "../../components";
+import { ScreenHeader, SettingsLink } from "../../components";
 import { EXTERNAL_URLS } from "../../constants";
 import { useTheme } from "../../hooks";
 import { useNotesStore, useSettingsStore } from "../../store";
@@ -122,20 +114,7 @@ export default function SettingsScreen() {
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
     >
-      <View style={styles.header}>
-        <Pressable
-          onPress={() => router.back()}
-          style={({ pressed }) => [
-            styles.backButton,
-            { opacity: pressed ? 0.7 : 1 },
-          ]}
-        >
-          <Ionicons name="chevron-back" size={24} color={colors.text} />
-          <Text style={[styles.backText, { color: colors.text }]}>
-            {t("settings.title")}
-          </Text>
-        </Pressable>
-      </View>
+      <ScreenHeader title={t("settings.title")} showBack />
 
       <ScrollView
         style={styles.content}
@@ -206,19 +185,6 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  backButton: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  backText: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginLeft: 4,
   },
   content: {
     flex: 1,

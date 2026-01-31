@@ -2,18 +2,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ScreenHeader } from "../components";
 import { NOTE_MAX_LENGTH } from "../constants";
 import { useTheme } from "../hooks";
 import { useCategoriesStore, useNotesStore } from "../store";
+
 
 export default function NewNoteScreen() {
   const { t } = useTranslation();
@@ -44,23 +39,9 @@ export default function NewNoteScreen() {
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
     >
-      <View style={styles.header}>
-        <Pressable
-          onPress={() => router.back()}
-          style={({ pressed }) => [
-            styles.backButton,
-            { opacity: pressed ? 0.7 : 1 },
-          ]}
-        >
-          <Ionicons name="chevron-back" size={24} color={colors.text} />
-          <Text style={[styles.backText, { color: colors.text }]}>
-            {t("newNote.title")}
-          </Text>
-        </Pressable>
-      </View>
+      <ScreenHeader title={t("newNote.title")} showBack />
 
       <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
-        {/* Category Picker */}
         <Text style={[styles.label, { color: colors.textSecondary }]}>
           {t("newNote.chooseCategory")}
         </Text>
@@ -113,7 +94,6 @@ export default function NewNoteScreen() {
           </View>
         )}
 
-        {/* Note Content Input */}
         <Text
           style={[styles.label, { color: colors.textSecondary, marginTop: 20 }]}
         >
@@ -138,7 +118,6 @@ export default function NewNoteScreen() {
           </Text>
         </View>
 
-        {/* Save Button */}
         <Pressable
           style={[
             styles.saveButton,
@@ -157,19 +136,6 @@ export default function NewNoteScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  backButton: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  backText: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginLeft: 4,
   },
   content: {
     flex: 1,

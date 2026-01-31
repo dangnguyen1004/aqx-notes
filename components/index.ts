@@ -1,5 +1,6 @@
-export { NoteItem } from './NoteItem';
-export { CategoryCard } from './CategoryCard';
-export { CategorySummary } from './CategorySummary';
-export { SettingsLink } from './SettingsLink';
-export { TrashNoteItem } from './TrashNoteItem';
+export { CategoryCard } from "./CategoryCard";
+export { CategorySummary } from "./CategorySummary";
+export { NoteItem } from "./NoteItem";
+export { ScreenHeader } from "./ScreenHeader";
+export { SettingsLink } from "./SettingsLink";
+export { TrashNoteItem } from "./TrashNoteItem";

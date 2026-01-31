@@ -1,23 +1,19 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
 import { useTheme } from "../hooks";
 import "../i18n";
 import { useCategoriesStore, useSettingsStore } from "../store";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
-  // Hydrate settings store
+  // Hydrate stores
   useSettingsStore();
+  useCategoriesStore();
 
   const { colors, isDark } = useTheme();
-  const { initializeCategories } = useCategoriesStore();
-
-  useEffect(() => {
-    initializeCategories();
-  }, [initializeCategories]);
 
   return (
-    <>
+    <SafeAreaProvider>
       <StatusBar style={isDark ? "light" : "dark"} />
       <Stack
         screenOptions={{
@@ -32,6 +28,6 @@ export default function RootLayout() {
         <Stack.Screen name="settings/trash" />
         <Stack.Screen name="note/[id]" />
       </Stack>
-    </>
+    </SafeAreaProvider>
   );
 }

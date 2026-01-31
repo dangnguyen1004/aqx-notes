@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -8,9 +8,11 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ScreenHeader } from "../../components";
 import { useTheme } from "../../hooks";
 import {
   useCategoriesStore,
@@ -18,6 +20,7 @@ import {
   useSettingsStore,
 } from "../../store";
 import { formatDate } from "../../utils";
+import { NOTE_MAX_LENGTH } from "../../constants";
 
 export default function NoteDetailScreen() {
   const { t } = useTranslation();
@@ -25,11 +28,14 @@ export default function NoteDetailScreen() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { language } = useSettingsStore();
-  const { getNoteById, softDeleteNote } = useNotesStore();
+  const { getNoteById, softDeleteNote, updateNote } = useNotesStore();
   const { getCategoryById } = useCategoriesStore();
 
   const note = getNoteById(id);
   const category = note ? getCategoryById(note.categoryId) : null;
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(note?.content ?? "");
 
   const handleDelete = () => {
     Alert.alert(t("common.confirm"), t("noteDetail.deleteConfirm"), [
@@ -45,25 +51,29 @@ export default function NoteDetailScreen() {
     ]);
   };
 
+  const handleEdit = () => {
+    setEditedContent(note?.content ?? "");
+    setIsEditing(true);
+  };
+
+  const handleSave = () => {
+    if (editedContent.trim()) {
+      updateNote(id, editedContent.trim());
+      setIsEditing(false);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditedContent(note?.content ?? "");
+    setIsEditing(false);
+  };
+
   if (!note) {
     return (
       <SafeAreaView
         style={[styles.container, { backgroundColor: colors.background }]}
       >
-        <View style={styles.header}>
-          <Pressable
-            onPress={() => router.back()}
-            style={({ pressed }) => [
-              styles.backButton,
-              { opacity: pressed ? 0.7 : 1 },
-            ]}
-          >
-            <Ionicons name="chevron-back" size={24} color={colors.text} />
-            <Text style={[styles.backText, { color: colors.text }]}>
-              {t("common.back")}
-            </Text>
-          </Pressable>
-        </View>
+        <ScreenHeader title={t("common.back")} showBack />
         <View style={styles.notFound}>
           <Ionicons
             name="document-outline"
@@ -82,26 +92,63 @@ export default function NoteDetailScreen() {
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
     >
-      <View style={styles.header}>
-        <Pressable
-          onPress={() => router.back()}
-          style={({ pressed }) => [
-            styles.backButton,
-            { opacity: pressed ? 0.7 : 1 },
-          ]}
-        >
-          <Ionicons name="chevron-back" size={24} color={colors.text} />
-          <Text style={[styles.backText, { color: colors.text }]}>
-            {t("noteDetail.title")}
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={handleDelete}
-          style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
-        >
-          <Ionicons name="trash-outline" size={24} color={colors.accent} />
-        </Pressable>
-      </View>
+      <ScreenHeader
+        title={t("noteDetail.title")}
+        showBack={!isEditing}
+        leftAction={
+          isEditing ? (
+            <Pressable
+              onPress={handleCancelEdit}
+              style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
+            >
+              <Text style={{ color: colors.textSecondary, fontSize: 16 }}>
+                {t("common.cancel")}
+              </Text>
+            </Pressable>
+          ) : undefined
+        }
+        rightAction={
+          isEditing ? (
+            <Pressable
+              onPress={handleSave}
+              style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
+            >
+              <Text
+                style={{
+                  color: colors.accent,
+                  fontSize: 16,
+                  fontWeight: "600",
+                }}
+              >
+                {t("common.save")}
+              </Text>
+            </Pressable>
+          ) : (
+            <View style={{ flexDirection: "row", gap: 16 }}>
+              <Pressable
+                onPress={handleEdit}
+                style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
+              >
+                <Ionicons
+                  name="pencil-outline"
+                  size={24}
+                  color={colors.accent}
+                />
+              </Pressable>
+              <Pressable
+                onPress={handleDelete}
+                style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
+              >
+                <Ionicons
+                  name="trash-outline"
+                  size={24}
+                  color={colors.accent}
+                />
+              </Pressable>
+            </View>
+          )
+        }
+      />
 
       <ScrollView
         style={styles.content}
@@ -122,9 +169,34 @@ export default function NoteDetailScreen() {
 
         {/* Note Content */}
         <View style={[styles.contentCard, { backgroundColor: colors.card }]}>
-          <Text style={[styles.noteContent, { color: colors.text }]}>
-            {note.content}
-          </Text>
+          {isEditing ? (
+            <>
+              <TextInput
+                style={[
+                  styles.noteContent,
+                  styles.noteInput,
+                  { color: colors.text },
+                ]}
+                value={editedContent}
+                onChangeText={setEditedContent}
+                multiline
+                maxLength={NOTE_MAX_LENGTH}
+                autoFocus
+                placeholder={t("newNote.placeholder")}
+                placeholderTextColor={colors.textSecondary}
+              />
+              <Text style={[styles.charCount, { color: colors.textSecondary }]}>
+                {t("newNote.characterCount", {
+                  count: editedContent.length,
+                  max: NOTE_MAX_LENGTH,
+                })}
+              </Text>
+            </>
+          ) : (
+            <Text style={[styles.noteContent, { color: colors.text }]}>
+              {note.content}
+            </Text>
+          )}
         </View>
 
         {/* Metadata */}
@@ -149,22 +221,6 @@ export default function NoteDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  backButton: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  backText: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginLeft: 4,
   },
   content: {
     flex: 1,
@@ -199,6 +255,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
   },
+  noteInput: {
+    minHeight: 200,
+    textAlignVertical: "top",
+  },
   metadata: {
     marginTop: 8,
   },
@@ -218,5 +278,10 @@ const styles = StyleSheet.create({
   notFoundText: {
     fontSize: 16,
     marginTop: 16,
+  },
+  charCount: {
+    fontSize: 12,
+    textAlign: "right",
+    marginTop: 8,
   },
 });

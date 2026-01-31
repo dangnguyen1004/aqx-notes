@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CategorySummary } from "../../components";
+import { CategorySummary, ScreenHeader } from "../../components";
 import { useTheme } from "../../hooks";
 import { useCategoriesStore } from "../../store";
 
@@ -14,12 +14,9 @@ export default function SummaryScreen() {
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
+      edges={["top"]}
     >
-      <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.text }]}>
-          {t("summary.title")}
-        </Text>
-      </View>
+      <ScreenHeader title={t("summary.title")} />
 
       <ScrollView
         style={styles.content}
@@ -29,9 +26,6 @@ export default function SummaryScreen() {
         {categories.map((category) => (
           <CategorySummary key={category.id} category={category} />
         ))}
-
-        {/* Extra padding for FAB */}
-        <View style={{ height: 80 }} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -41,18 +35,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-  },
   content: {
     flex: 1,
   },
   scrollContent: {
     paddingHorizontal: 20,
+    paddingBottom: 30,
   },
 });

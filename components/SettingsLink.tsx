@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../hooks';
+import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useTheme } from "../hooks";
 
 interface SettingsLinkProps {
   icon?: keyof typeof Ionicons.glyphMap;
@@ -42,7 +42,11 @@ export const SettingsLink: React.FC<SettingsLinkProps> = ({
       {rightElement ? (
         rightElement
       ) : showArrow ? (
-        <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
+        <Ionicons
+          name="chevron-forward"
+          size={20}
+          color={colors.textSecondary}
+        />
       ) : null}
     </Pressable>
   );
@@ -50,16 +54,16 @@ export const SettingsLink: React.FC<SettingsLinkProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: 16,
     borderRadius: 12,
     marginBottom: 8,
   },
   leftSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   icon: {
     marginRight: 12,

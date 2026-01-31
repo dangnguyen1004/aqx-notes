@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { v4 as uuidv4 } from 'uuid';
+import * as Crypto from 'expo-crypto';
 import { Note } from '../types';
 
 interface NotesState {
@@ -29,7 +29,7 @@ export const useNotesStore = create<NotesState>()(
       addNote: (content: string, categoryId: string) => {
         const now = Date.now();
         const newNote: Note = {
-          id: uuidv4(),
+          id: Crypto.randomUUID(),
           content,
           categoryId,
           createdAt: now,

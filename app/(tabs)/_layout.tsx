@@ -10,7 +10,7 @@ function FloatingActionButton({ bottomInset }: { bottomInset: number }) {
 
   return (
     <View
-      style={[styles.fabContainer, { bottom: 40 + bottomInset }]}
+      style={[styles.fabContainer, { bottom: 30 + bottomInset }]}
       pointerEvents="box-none"
     >
       <Pressable style={styles.fab} onPress={() => router.push("/new-note")}>
