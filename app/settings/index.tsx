@@ -1,22 +1,22 @@
-import React from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import * as Linking from "expo-linking";
+import { useRouter } from "expo-router";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-  Pressable,
   Alert,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import * as Linking from 'expo-linking';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../../hooks';
-import { useSettingsStore, useNotesStore } from '../../store';
-import { SettingsLink } from '../../components';
-import { EXTERNAL_URLS } from '../../constants';
-import { ThemeMode, Language } from '../../types';
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { SettingsLink } from "../../components";
+import { EXTERNAL_URLS } from "../../constants";
+import { useTheme } from "../../hooks";
+import { useNotesStore, useSettingsStore } from "../../store";
+import { Language, ThemeMode } from "../../types";
 
 export default function SettingsScreen() {
   const { t } = useTranslation();
@@ -28,44 +28,40 @@ export default function SettingsScreen() {
   const handleDeleteAllNotes = () => {
     const activeNotes = getActiveNotes();
     if (activeNotes.length === 0) {
-      Alert.alert(t('common.noNotes'));
+      Alert.alert(t("common.noNotes"));
       return;
     }
 
-    Alert.alert(
-      t('common.confirm'),
-      t('settings.deleteAllConfirm'),
-      [
-        { text: t('common.cancel'), style: 'cancel' },
-        {
-          text: t('common.delete'),
-          style: 'destructive',
-          onPress: () => {
-            deleteAllNotes();
-            Alert.alert(t('settings.allNotesDeleted'));
-          },
+    Alert.alert(t("common.confirm"), t("settings.deleteAllConfirm"), [
+      { text: t("common.cancel"), style: "cancel" },
+      {
+        text: t("common.delete"),
+        style: "destructive",
+        onPress: () => {
+          deleteAllNotes();
+          Alert.alert(t("settings.allNotesDeleted"));
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const openURL = async (url: string) => {
     try {
       await Linking.openURL(url);
     } catch (error) {
-      console.error('Failed to open URL:', error);
+      console.error("Failed to open URL:", error);
     }
   };
 
   const themeOptions: { value: ThemeMode; label: string }[] = [
-    { value: 'light', label: t('settings.themeLight') },
-    { value: 'dark', label: t('settings.themeDark') },
-    { value: 'auto', label: t('settings.themeAuto') },
+    { value: "light", label: t("settings.themeLight") },
+    { value: "dark", label: t("settings.themeDark") },
+    { value: "auto", label: t("settings.themeAuto") },
   ];
 
   const languageOptions: { value: Language; label: string }[] = [
-    { value: 'en', label: t('languages.en') },
-    { value: 'vi', label: t('languages.vi') },
+    { value: "en", label: t("languages.en") },
+    { value: "vi", label: t("languages.vi") },
   ];
 
   const ThemeSelector = () => (
@@ -85,7 +81,7 @@ export default function SettingsScreen() {
           <Text
             style={[
               styles.selectorText,
-              { color: theme === option.value ? '#ffffff' : colors.text },
+              { color: theme === option.value ? "#ffffff" : colors.text },
             ]}
           >
             {option.label}
@@ -112,7 +108,7 @@ export default function SettingsScreen() {
           <Text
             style={[
               styles.selectorText,
-              { color: language === option.value ? '#ffffff' : colors.text },
+              { color: language === option.value ? "#ffffff" : colors.text },
             ]}
           >
             {option.label}
@@ -123,15 +119,20 @@ export default function SettingsScreen() {
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <View style={styles.header}>
         <Pressable
           onPress={() => router.back()}
-          style={({ pressed }) => [styles.backButton, { opacity: pressed ? 0.7 : 1 }]}
+          style={({ pressed }) => [
+            styles.backButton,
+            { opacity: pressed ? 0.7 : 1 },
+          ]}
         >
           <Ionicons name="chevron-back" size={24} color={colors.text} />
           <Text style={[styles.backText, { color: colors.text }]}>
-            {t('settings.title')}
+            {t("settings.title")}
           </Text>
         </Pressable>
       </View>
@@ -143,13 +144,13 @@ export default function SettingsScreen() {
       >
         {/* Theme Section */}
         <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-          {t('settings.theme')}
+          {t("settings.theme")}
         </Text>
         <ThemeSelector />
 
         {/* Language Section */}
         <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-          {t('settings.language')}
+          {t("settings.language")}
         </Text>
         <LanguageSelector />
 
@@ -159,22 +160,22 @@ export default function SettingsScreen() {
         </Text>
         <SettingsLink
           icon="chatbubble-outline"
-          label={t('settings.onlineCustomer')}
+          label={t("settings.onlineCustomer")}
           onPress={() => openURL(EXTERNAL_URLS.onlineCustomer)}
         />
         <SettingsLink
           icon="document-text-outline"
-          label={t('settings.userAgreement')}
+          label={t("settings.userAgreement")}
           onPress={() => openURL(EXTERNAL_URLS.userAgreement)}
         />
         <SettingsLink
           icon="shield-checkmark-outline"
-          label={t('settings.privacyPolicy')}
+          label={t("settings.privacyPolicy")}
           onPress={() => openURL(EXTERNAL_URLS.privacyPolicy)}
         />
         <SettingsLink
           icon="information-circle-outline"
-          label={t('settings.aboutUs')}
+          label={t("settings.aboutUs")}
           onPress={() => openURL(EXTERNAL_URLS.aboutUs)}
         />
 
@@ -184,8 +185,8 @@ export default function SettingsScreen() {
         </Text>
         <SettingsLink
           icon="trash-outline"
-          label={t('settings.trash')}
-          onPress={() => router.push('/settings/trash')}
+          label={t("settings.trash")}
+          onPress={() => router.push("/settings/trash")}
         />
 
         {/* Delete All Notes Button */}
@@ -194,7 +195,7 @@ export default function SettingsScreen() {
           onPress={handleDeleteAllNotes}
         >
           <Text style={styles.deleteButtonText}>
-            {t('settings.deleteAllNotes')}
+            {t("settings.deleteAllNotes")}
           </Text>
         </Pressable>
       </ScrollView>
@@ -211,12 +212,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   backButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   backText: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
     marginLeft: 4,
   },
   content: {
@@ -228,13 +229,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
     marginTop: 24,
     marginBottom: 12,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   selectorContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
     marginBottom: 8,
   },
@@ -242,21 +243,21 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
   },
   selectorText: {
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   deleteButton: {
     marginTop: 32,
     paddingVertical: 16,
     borderRadius: 12,
-    alignItems: 'center',
+    alignItems: "center",
   },
   deleteButtonText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });

@@ -1,32 +1,19 @@
-import { Tabs } from 'expo-router';
-import { View, StyleSheet, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { useTheme } from '../../hooks';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import { Tabs, useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
+import { Pressable, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTheme } from "../../hooks";
 
-function TabBarIcon({
-  name,
-  color,
-  size = 24,
-}: {
-  name: keyof typeof Ionicons.glyphMap;
-  color: string;
-  size?: number;
-}) {
-  return <Ionicons name={name} size={size} color={color} />;
-}
-
-function FloatingActionButton() {
+function FloatingActionButton({ bottomInset }: { bottomInset: number }) {
   const router = useRouter();
-  const { colors } = useTheme();
 
   return (
-    <View style={styles.fabContainer}>
-      <Pressable
-        style={[styles.fab, { backgroundColor: colors.accent }]}
-        onPress={() => router.push('/new-note')}
-      >
+    <View
+      style={[styles.fabContainer, { bottom: 40 + bottomInset }]}
+      pointerEvents="box-none"
+    >
+      <Pressable style={styles.fab} onPress={() => router.push("/new-note")}>
         <Ionicons name="add" size={32} color="#ffffff" />
       </Pressable>
     </View>
@@ -34,11 +21,12 @@ function FloatingActionButton() {
 }
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const { colors } = useTheme();
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background }}>
+    <>
       <Tabs
         screenOptions={{
           headerShown: false,
@@ -47,8 +35,8 @@ export default function TabLayout() {
           tabBarStyle: {
             backgroundColor: colors.tabBar,
             borderTopColor: colors.border,
-            height: 60,
-            paddingBottom: 8,
+            height: 60 + insets.bottom,
+            paddingBottom: 8 + insets.bottom,
             paddingTop: 8,
           },
           tabBarLabelStyle: {
@@ -59,44 +47,43 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: t('home.title'),
+            title: t("home.title"),
             tabBarIcon: ({ color }) => (
-              <TabBarIcon name="home-outline" color={color} />
+              <Ionicons name="home-outline" size={24} color={color} />
             ),
           }}
         />
         <Tabs.Screen
           name="summary"
           options={{
-            title: t('summary.title'),
+            title: t("summary.title"),
             tabBarIcon: ({ color }) => (
-              <TabBarIcon name="stats-chart-outline" color={color} />
+              <Ionicons name="stats-chart-outline" size={24} color={color} />
             ),
           }}
         />
       </Tabs>
-      <FloatingActionButton />
-    </View>
+      <FloatingActionButton bottomInset={insets.bottom} />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   fabContainer: {
-    position: 'absolute',
-    bottom: 30,
+    position: "absolute",
     left: 0,
     right: 0,
-    alignItems: 'center',
-    pointerEvents: 'box-none',
+    alignItems: "center",
   },
   fab: {
     width: 56,
     height: 56,
     borderRadius: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#e94560",
+    justifyContent: "center",
+    alignItems: "center",
     elevation: 8,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4,

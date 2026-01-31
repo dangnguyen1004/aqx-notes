@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  TextInput,
   Pressable,
   ScrollView,
-  Alert,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../hooks';
-import { useNotesStore, useCategoriesStore } from '../store';
-import { NOTE_MAX_LENGTH } from '../constants';
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { NOTE_MAX_LENGTH } from "../constants";
+import { useTheme } from "../hooks";
+import { useCategoriesStore, useNotesStore } from "../store";
 
 export default function NewNoteScreen() {
   const { t } = useTranslation();
@@ -23,7 +22,7 @@ export default function NewNoteScreen() {
   const { categories } = useCategoriesStore();
   const { addNote } = useNotesStore();
 
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     categories[0]?.id || null
   );
@@ -42,15 +41,20 @@ export default function NewNoteScreen() {
   const canSave = content.trim().length > 0 && selectedCategoryId;
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <View style={styles.header}>
         <Pressable
           onPress={() => router.back()}
-          style={({ pressed }) => [styles.backButton, { opacity: pressed ? 0.7 : 1 }]}
+          style={({ pressed }) => [
+            styles.backButton,
+            { opacity: pressed ? 0.7 : 1 },
+          ]}
         >
           <Ionicons name="chevron-back" size={24} color={colors.text} />
           <Text style={[styles.backText, { color: colors.text }]}>
-            {t('newNote.title')}
+            {t("newNote.title")}
           </Text>
         </Pressable>
       </View>
@@ -58,7 +62,7 @@ export default function NewNoteScreen() {
       <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
         {/* Category Picker */}
         <Text style={[styles.label, { color: colors.textSecondary }]}>
-          {t('newNote.chooseCategory')}
+          {t("newNote.chooseCategory")}
         </Text>
         <Pressable
           style={[styles.categorySelector, { backgroundColor: colors.card }]}
@@ -75,7 +79,7 @@ export default function NewNoteScreen() {
             )}
           </View>
           <Ionicons
-            name={showCategoryPicker ? 'chevron-up' : 'chevron-down'}
+            name={showCategoryPicker ? "chevron-up" : "chevron-down"}
             size={20}
             color={colors.textSecondary}
           />
@@ -89,7 +93,7 @@ export default function NewNoteScreen() {
                 style={[
                   styles.categoryOption,
                   selectedCategoryId === category.id && {
-                    backgroundColor: colors.accent + '20',
+                    backgroundColor: colors.accent + "20",
                   },
                 ]}
                 onPress={() => {
@@ -110,13 +114,15 @@ export default function NewNoteScreen() {
         )}
 
         {/* Note Content Input */}
-        <Text style={[styles.label, { color: colors.textSecondary, marginTop: 20 }]}>
-          {t('newNote.placeholder')}
+        <Text
+          style={[styles.label, { color: colors.textSecondary, marginTop: 20 }]}
+        >
+          {t("newNote.placeholder")}
         </Text>
         <View style={[styles.inputContainer, { backgroundColor: colors.card }]}>
           <TextInput
             style={[styles.input, { color: colors.text }]}
-            placeholder={t('newNote.placeholder')}
+            placeholder={t("newNote.placeholder")}
             placeholderTextColor={colors.textSecondary}
             multiline
             maxLength={NOTE_MAX_LENGTH}
@@ -125,7 +131,7 @@ export default function NewNoteScreen() {
             textAlignVertical="top"
           />
           <Text style={[styles.charCount, { color: colors.textSecondary }]}>
-            {t('newNote.characterCount', {
+            {t("newNote.characterCount", {
               count: content.length,
               max: NOTE_MAX_LENGTH,
             })}
@@ -141,7 +147,7 @@ export default function NewNoteScreen() {
           onPress={handleSave}
           disabled={!canSave}
         >
-          <Text style={styles.saveButtonText}>{t('common.save')}</Text>
+          <Text style={styles.saveButtonText}>{t("common.save")}</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
@@ -157,12 +163,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   backButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   backText: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
     marginLeft: 4,
   },
   content: {
@@ -174,15 +180,15 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   categorySelector: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: 16,
     borderRadius: 12,
   },
   categoryDisplay: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   categoryIcon: {
     fontSize: 20,
@@ -194,11 +200,11 @@ const styles = StyleSheet.create({
   categoryList: {
     marginTop: 8,
     borderRadius: 12,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   categoryOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 16,
   },
   inputContainer: {
@@ -213,18 +219,18 @@ const styles = StyleSheet.create({
   },
   charCount: {
     fontSize: 12,
-    textAlign: 'right',
+    textAlign: "right",
     marginTop: 8,
   },
   saveButton: {
     marginTop: 24,
     paddingVertical: 16,
     borderRadius: 12,
-    alignItems: 'center',
+    alignItems: "center",
   },
   saveButtonText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });

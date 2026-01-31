@@ -1,18 +1,12 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-  Pressable,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../../hooks';
-import { useCategoriesStore } from '../../store';
-import { CategoryCard } from '../../components';
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { CategoryCard } from "../../components";
+import { useTheme } from "../../hooks";
+import { useCategoriesStore } from "../../store";
 
 export default function HomeScreen() {
   const { t } = useTranslation();
@@ -21,13 +15,15 @@ export default function HomeScreen() {
   const { categories } = useCategoriesStore();
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.text }]}>
-          {t('home.title')}
+          {t("home.title")}
         </Text>
         <Pressable
-          onPress={() => router.push('/settings')}
+          onPress={() => router.push("/settings")}
           style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
         >
           <Ionicons name="settings-outline" size={24} color={colors.text} />
@@ -47,7 +43,7 @@ export default function HomeScreen() {
               color={colors.textSecondary}
             />
             <Text style={[styles.recentText, { color: colors.textSecondary }]}>
-              {t('home.recentlyCreated')}
+              {t("home.recentlyCreated")}
             </Text>
           </View>
         </View>
@@ -68,15 +64,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 16,
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   content: {
     flex: 1,
@@ -88,8 +84,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   recentHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 6,
   },
   recentText: {

@@ -1,15 +1,10 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { useTheme } from '../../hooks';
-import { useCategoriesStore } from '../../store';
-import { CategorySummary } from '../../components';
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { CategorySummary } from "../../components";
+import { useTheme } from "../../hooks";
+import { useCategoriesStore } from "../../store";
 
 export default function SummaryScreen() {
   const { t } = useTranslation();
@@ -17,10 +12,12 @@ export default function SummaryScreen() {
   const { categories } = useCategoriesStore();
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.text }]}>
-          {t('summary.title')}
+          {t("summary.title")}
         </Text>
       </View>
 
@@ -50,7 +47,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   content: {
     flex: 1,

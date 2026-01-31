@@ -1,12 +1,14 @@
-import { useEffect } from 'react';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { useCategoriesStore, useSettingsStore } from '../store';
-import { ThemeProvider } from '../providers';
-import { useTheme } from '../hooks';
-import '../i18n';
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
+import { useTheme } from "../hooks";
+import "../i18n";
+import { useCategoriesStore, useSettingsStore } from "../store";
 
-function RootLayoutNav() {
+export default function RootLayout() {
+  // Hydrate settings store
+  useSettingsStore();
+
   const { colors, isDark } = useTheme();
   const { initializeCategories } = useCategoriesStore();
 
@@ -16,36 +18,20 @@ function RootLayoutNav() {
 
   return (
     <>
-      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <StatusBar style={isDark ? "light" : "dark"} />
       <Stack
         screenOptions={{
           headerShown: false,
           contentStyle: { backgroundColor: colors.background },
-          animation: 'slide_from_right',
+          animation: "slide_from_right",
         }}
       >
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen
-          name="new-note"
-          options={{
-            presentation: 'card',
-          }}
-        />
+        <Stack.Screen name="new-note" />
         <Stack.Screen name="settings/index" />
         <Stack.Screen name="settings/trash" />
         <Stack.Screen name="note/[id]" />
       </Stack>
     </>
-  );
-}
-
-export default function RootLayout() {
-  // Hydrate settings store
-  useSettingsStore();
-
-  return (
-    <ThemeProvider>
-      <RootLayoutNav />
-    </ThemeProvider>
   );
 }

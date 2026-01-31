@@ -5,7 +5,7 @@ import { ThemeColors } from '../types';
 
 export const useTheme = (): { colors: ThemeColors; isDark: boolean } => {
   const systemColorScheme = useColorScheme();
-  const { theme } = useSettingsStore();
+  const theme = useSettingsStore((state) => state.theme) ?? 'auto';
 
   const isDark =
     theme === 'auto'
