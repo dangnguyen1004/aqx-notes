@@ -3,6 +3,7 @@ import { Tabs, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SPACING } from "../../constants";
 import { useTheme } from "../../hooks";
 
 function FloatingActionButton({ bottomInset }: { bottomInset: number }) {
@@ -34,10 +35,10 @@ export default function TabLayout() {
           tabBarInactiveTintColor: colors.tabBarInactive,
           tabBarStyle: {
             backgroundColor: colors.tabBar,
-            borderTopColor: colors.border,
+            borderTopColor: colors.tabBar,
             height: 60 + insets.bottom,
-            paddingBottom: 8 + insets.bottom,
-            paddingTop: 8,
+            paddingBottom: SPACING.sm + insets.bottom,
+            paddingTop: SPACING.sm,
           },
           tabBarLabelStyle: {
             fontSize: 12,
@@ -82,10 +83,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#e94560",
     justifyContent: "center",
     alignItems: "center",
-    elevation: 8,
+    elevation: SPACING.sm,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: SPACING.xs },
     shadowOpacity: 0.3,
-    shadowRadius: 4,
+    shadowRadius: SPACING.xs,
   },
 });

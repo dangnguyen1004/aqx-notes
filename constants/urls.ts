@@ -1,6 +1,6 @@
 export const EXTERNAL_URLS = {
-  onlineCustomer: 'https://example.com/customer-support',
-  userAgreement: 'https://example.com/user-agreement',
-  privacyPolicy: 'https://example.com/privacy-policy',
-  aboutUs: 'https://example.com/about-us',
+  onlineCustomer: "https://www.linkedin.com/company/aquariux-fintech",
+  userAgreement: "https://www.aquariux.com/privacy-policy/",
+  privacyPolicy: "https://www.aquariux.com/privacy-policy/",
+  aboutUs: "https://www.aquariux.com/about/",
 };

@@ -1,9 +1,20 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ScreenHeader, TrashNoteItem } from "../../components";
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import {
+  GradientBackground,
+  ScreenHeader,
+  TrashNoteItem,
+} from "../../components";
+import { RADIUS, SPACING } from "../../constants";
 import { useTheme } from "../../hooks";
 import { useNotesStore } from "../../store";
 
@@ -28,9 +39,7 @@ export default function TrashScreen() {
   };
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.background }]}
-    >
+    <GradientBackground>
       <ScreenHeader title={t("trash.title")} showBack />
 
       <ScrollView
@@ -43,15 +52,6 @@ export default function TrashScreen() {
             {deletedNotes.map((note) => (
               <TrashNoteItem key={note.id} note={note} />
             ))}
-
-            <Pressable
-              style={[styles.emptyButton, { backgroundColor: colors.accent }]}
-              onPress={handleEmptyTrash}
-            >
-              <Text style={styles.emptyButtonText}>
-                {t("common.emptyTrash")}
-              </Text>
-            </Pressable>
           </>
         ) : (
           <View style={styles.emptyState}>
@@ -66,20 +66,31 @@ export default function TrashScreen() {
           </View>
         )}
       </ScrollView>
-    </SafeAreaView>
+      {deletedNotes.length > 0 && (
+        <View
+          style={[
+            styles.actionContainer,
+            { backgroundColor: colors.background },
+          ]}
+        >
+          <Pressable
+            style={[styles.emptyButton, { backgroundColor: colors.accent }]}
+            onPress={handleEmptyTrash}
+          >
+            <Text style={styles.emptyButtonText}>{t("common.emptyTrash")}</Text>
+          </Pressable>
+        </View>
+      )}
+    </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     flex: 1,
   },
   scrollContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 40,
+    padding: SPACING.xl,
   },
   emptyState: {
     flex: 1,
@@ -87,14 +98,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 100,
   },
+  actionContainer: {
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.lg,
+  },
   emptyText: {
     fontSize: 16,
-    marginTop: 16,
+    marginTop: SPACING.lg,
   },
   emptyButton: {
-    marginTop: 24,
-    paddingVertical: 16,
-    borderRadius: 12,
+    paddingVertical: SPACING.md,
+    borderRadius: RADIUS.md,
     alignItems: "center",
   },
   emptyButtonText: {

@@ -2,13 +2,18 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ScreenHeader } from "../components";
-import { NOTE_MAX_LENGTH } from "../constants";
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { GradientBackground, ScreenHeader } from "../components";
+import { NOTE_MAX_LENGTH, RADIUS, SPACING } from "../constants";
 import { useTheme } from "../hooks";
 import { useCategoriesStore, useNotesStore } from "../store";
-
 
 export default function NewNoteScreen() {
   const { t } = useTranslation();
@@ -36,17 +41,23 @@ export default function NewNoteScreen() {
   const canSave = content.trim().length > 0 && selectedCategoryId;
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.background }]}
-    >
+    <GradientBackground>
       <ScreenHeader title={t("newNote.title")} showBack />
 
-      <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        style={styles.content}
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+      >
         <Text style={[styles.label, { color: colors.textSecondary }]}>
           {t("newNote.chooseCategory")}
         </Text>
+
         <Pressable
-          style={[styles.categorySelector, { backgroundColor: colors.card }]}
+          style={[
+            styles.categorySelector,
+            { backgroundColor: colors.cardBackground },
+          ]}
           onPress={() => setShowCategoryPicker(!showCategoryPicker)}
         >
           <View style={styles.categoryDisplay}>
@@ -67,7 +78,12 @@ export default function NewNoteScreen() {
         </Pressable>
 
         {showCategoryPicker && (
-          <View style={[styles.categoryList, { backgroundColor: colors.card }]}>
+          <View
+            style={[
+              styles.categoryList,
+              { backgroundColor: colors.cardBackground },
+            ]}
+          >
             {categories.map((category) => (
               <Pressable
                 key={category.id}
@@ -99,7 +115,12 @@ export default function NewNoteScreen() {
         >
           {t("newNote.placeholder")}
         </Text>
-        <View style={[styles.inputContainer, { backgroundColor: colors.card }]}>
+        <View
+          style={[
+            styles.inputContainer,
+            { backgroundColor: colors.cardBackground },
+          ]}
+        >
           <TextInput
             style={[styles.input, { color: colors.text }]}
             placeholder={t("newNote.placeholder")}
@@ -129,28 +150,27 @@ export default function NewNoteScreen() {
           <Text style={styles.saveButtonText}>{t("common.save")}</Text>
         </Pressable>
       </ScrollView>
-    </SafeAreaView>
+    </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     flex: 1,
-    paddingHorizontal: 20,
+  },
+  scrollContent: {
+    padding: SPACING.xl,
   },
   label: {
     fontSize: 14,
-    marginBottom: 8,
+    marginBottom: SPACING.sm,
   },
   categorySelector: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 16,
-    borderRadius: 12,
+    padding: SPACING.lg,
+    borderRadius: RADIUS.md,
   },
   categoryDisplay: {
     flexDirection: "row",
@@ -158,24 +178,24 @@ const styles = StyleSheet.create({
   },
   categoryIcon: {
     fontSize: 20,
-    marginRight: 8,
+    marginRight: SPACING.sm,
   },
   categoryText: {
     fontSize: 16,
   },
   categoryList: {
-    marginTop: 8,
-    borderRadius: 12,
+    marginTop: SPACING.sm,
+    borderRadius: RADIUS.md,
     overflow: "hidden",
   },
   categoryOption: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 16,
+    padding: SPACING.lg,
   },
   inputContainer: {
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: RADIUS.md,
+    padding: SPACING.lg,
     minHeight: 200,
   },
   input: {
@@ -186,12 +206,12 @@ const styles = StyleSheet.create({
   charCount: {
     fontSize: 12,
     textAlign: "right",
-    marginTop: 8,
+    marginTop: SPACING.sm,
   },
   saveButton: {
-    marginTop: 24,
-    paddingVertical: 16,
-    borderRadius: 12,
+    marginTop: SPACING.xxl,
+    paddingVertical: SPACING.lg,
+    borderRadius: RADIUS.md,
     alignItems: "center",
   },
   saveButtonText: {

@@ -1,3 +1,5 @@
+import { ColorValue } from "react-native";
+
 export interface Category {
   id: string;
   key: string;
@@ -17,16 +19,18 @@ export interface Note {
   deletedAt?: number;
 }
 
-export type ThemeMode = 'light' | 'dark' | 'auto';
-export type Language = 'en' | 'vi';
+export type ThemeMode = "light" | "dark" | "auto";
+export type Language = "en" | "vi";
 
 export interface ThemeColors {
   background: string;
-  card: string;
+  header: string;
   accent: string;
   text: string;
   textSecondary: string;
-  border: string;
   tabBar: string;
   tabBarInactive: string;
+  cardBackground: ColorValue;
+  cardBorder: ColorValue;
+  gradientBackgroundColors: [ColorValue, ColorValue, ...ColorValue[]];
 }

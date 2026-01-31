@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { RADIUS, SPACING } from "../constants";
 import { useTheme } from "../hooks";
 
 interface ScreenHeaderProps {
@@ -22,7 +23,7 @@ export function ScreenHeader({
 
   if (showBack || leftAction) {
     return (
-      <View style={styles.header}>
+      <View style={[styles.header, { backgroundColor: colors.header }]}>
         {leftAction ? (
           leftAction
         ) : (
@@ -34,7 +35,9 @@ export function ScreenHeader({
             ]}
           >
             <Ionicons name="chevron-back" size={24} color={colors.text} />
-            <Text style={[styles.backText, { color: colors.text }]}>{title}</Text>
+            <Text style={[styles.backText, { color: colors.text }]}>
+              {title}
+            </Text>
           </Pressable>
         )}
         {rightAction}
@@ -43,7 +46,7 @@ export function ScreenHeader({
   }
 
   return (
-    <View style={styles.headerTitle}>
+    <View style={[styles.headerTitle, { backgroundColor: colors.header }]}>
       <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
       {rightAction}
     </View>
@@ -55,8 +58,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.lg,
+    borderBottomLeftRadius: RADIUS.lg,
+    borderBottomRightRadius: RADIUS.lg,
   },
   backButton: {
     flexDirection: "row",
@@ -65,14 +70,16 @@ const styles = StyleSheet.create({
   backText: {
     fontSize: 18,
     fontWeight: "600",
-    marginLeft: 4,
+    marginLeft: SPACING.xs,
   },
   headerTitle: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.lg,
+    borderBottomLeftRadius: RADIUS.lg,
+    borderBottomRightRadius: RADIUS.lg,
   },
   title: {
     fontSize: 28,

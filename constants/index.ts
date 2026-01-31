@@ -1,4 +1,6 @@
 export * from './colors';
+export * from './radius';
+export * from './spacing';
 export * from './urls';
 
 export const DEFAULT_CATEGORIES = [

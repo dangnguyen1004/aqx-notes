@@ -11,8 +11,8 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ScreenHeader } from "../../components";
+import { GradientBackground, ScreenHeader } from "../../components";
+import { NOTE_MAX_LENGTH, RADIUS, SPACING } from "../../constants";
 import { useTheme } from "../../hooks";
 import {
   useCategoriesStore,
@@ -20,7 +20,6 @@ import {
   useSettingsStore,
 } from "../../store";
 import { formatDate } from "../../utils";
-import { NOTE_MAX_LENGTH } from "../../constants";
 
 export default function NoteDetailScreen() {
   const { t } = useTranslation();
@@ -70,9 +69,7 @@ export default function NoteDetailScreen() {
 
   if (!note) {
     return (
-      <SafeAreaView
-        style={[styles.container, { backgroundColor: colors.background }]}
-      >
+      <GradientBackground>
         <ScreenHeader title={t("common.back")} showBack />
         <View style={styles.notFound}>
           <Ionicons
@@ -84,24 +81,21 @@ export default function NoteDetailScreen() {
             Note not found
           </Text>
         </View>
-      </SafeAreaView>
+      </GradientBackground>
     );
   }
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.background }]}
-    >
+    <GradientBackground>
       <ScreenHeader
         title={t("noteDetail.title")}
         showBack={!isEditing}
         leftAction={
           isEditing ? (
-            <Pressable
-              onPress={handleCancelEdit}
-              style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
-            >
-              <Text style={{ color: colors.textSecondary, fontSize: 16 }}>
+            <Pressable onPress={handleCancelEdit}>
+              <Text
+                style={[styles.actionText, { color: colors.textSecondary }]}
+              >
                 {t("common.cancel")}
               </Text>
             </Pressable>
@@ -109,36 +103,27 @@ export default function NoteDetailScreen() {
         }
         rightAction={
           isEditing ? (
-            <Pressable
-              onPress={handleSave}
-              style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
-            >
+            <Pressable onPress={handleSave}>
               <Text
-                style={{
-                  color: colors.accent,
-                  fontSize: 16,
-                  fontWeight: "600",
-                }}
+                style={[
+                  styles.actionText,
+                  styles.saveText,
+                  { color: colors.accent },
+                ]}
               >
                 {t("common.save")}
               </Text>
             </Pressable>
           ) : (
-            <View style={{ flexDirection: "row", gap: 16 }}>
-              <Pressable
-                onPress={handleEdit}
-                style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
-              >
+            <View style={styles.actionRow}>
+              <Pressable onPress={handleEdit}>
                 <Ionicons
                   name="pencil-outline"
                   size={24}
                   color={colors.accent}
                 />
               </Pressable>
-              <Pressable
-                onPress={handleDelete}
-                style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
-              >
+              <Pressable onPress={handleDelete}>
                 <Ionicons
                   name="trash-outline"
                   size={24}
@@ -158,7 +143,10 @@ export default function NoteDetailScreen() {
         {/* Category Badge */}
         {category && (
           <View
-            style={[styles.categoryBadge, { backgroundColor: colors.card }]}
+            style={[
+              styles.categoryBadge,
+              { backgroundColor: colors.cardBackground },
+            ]}
           >
             <Text style={styles.categoryIcon}>{category.icon}</Text>
             <Text style={[styles.categoryText, { color: colors.text }]}>
@@ -168,7 +156,12 @@ export default function NoteDetailScreen() {
         )}
 
         {/* Note Content */}
-        <View style={[styles.contentCard, { backgroundColor: colors.card }]}>
+        <View
+          style={[
+            styles.contentCard,
+            { backgroundColor: colors.cardBackground },
+          ]}
+        >
           {isEditing ? (
             <>
               <TextInput
@@ -214,29 +207,25 @@ export default function NoteDetailScreen() {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     flex: 1,
   },
   scrollContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 40,
+    padding: SPACING.xl,
   },
   categoryBadge: {
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "flex-start",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginBottom: 16,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    borderRadius: RADIUS.xl,
+    marginBottom: SPACING.lg,
   },
   categoryIcon: {
     fontSize: 16,
@@ -247,9 +236,9 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   contentCard: {
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
+    borderRadius: RADIUS.md,
+    padding: SPACING.lg,
+    marginBottom: SPACING.lg,
   },
   noteContent: {
     fontSize: 16,
@@ -260,7 +249,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
   },
   metadata: {
-    marginTop: 8,
+    marginTop: SPACING.sm,
   },
   metaRow: {
     flexDirection: "row",
@@ -277,11 +266,21 @@ const styles = StyleSheet.create({
   },
   notFoundText: {
     fontSize: 16,
-    marginTop: 16,
+    marginTop: SPACING.lg,
   },
   charCount: {
     fontSize: 12,
     textAlign: "right",
-    marginTop: 8,
+    marginTop: SPACING.sm,
+  },
+  actionText: {
+    fontSize: 16,
+  },
+  saveText: {
+    fontWeight: "600",
+  },
+  actionRow: {
+    flexDirection: "row",
+    gap: SPACING.lg,
   },
 });

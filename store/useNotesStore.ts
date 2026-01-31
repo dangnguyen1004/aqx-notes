@@ -1,8 +1,8 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Crypto from 'expo-crypto';
-import { Note } from '../types';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Crypto from "expo-crypto";
+import { Note } from "../types";
 
 interface NotesState {
   notes: Note[];
@@ -42,9 +42,7 @@ export const useNotesStore = create<NotesState>()(
       updateNote: (id: string, content: string) => {
         set((state) => ({
           notes: state.notes.map((note) =>
-            note.id === id
-              ? { ...note, content, updatedAt: Date.now() }
-              : note
+            note.id === id ? { ...note, content, updatedAt: Date.now() } : note
           ),
         }));
       },
@@ -85,9 +83,7 @@ export const useNotesStore = create<NotesState>()(
         const now = Date.now();
         set((state) => ({
           notes: state.notes.map((note) =>
-            note.isDeleted
-              ? note
-              : { ...note, isDeleted: true, deletedAt: now }
+            note.isDeleted ? note : { ...note, isDeleted: true, deletedAt: now }
           ),
         }));
       },
@@ -105,7 +101,7 @@ export const useNotesStore = create<NotesState>()(
           .notes.filter(
             (note) => note.categoryId === categoryId && !note.isDeleted
           )
-          .sort((a, b) => b.createdAt - a.createdAt);
+          .sort((a, b) => b.updatedAt - a.updatedAt);
       },
 
       getLatestNotesByCategory: (categoryId: string, limit: number) => {
@@ -121,7 +117,7 @@ export const useNotesStore = create<NotesState>()(
       },
     }),
     {
-      name: 'aqx-notes-storage',
+      name: "aqx-notes-storage",
       storage: createJSONStorage(() => AsyncStorage),
     }
   )

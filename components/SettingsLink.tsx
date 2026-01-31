@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { RADIUS, SPACING } from "../constants";
 import { useTheme } from "../hooks";
 
 interface SettingsLinkProps {
@@ -24,7 +25,7 @@ export const SettingsLink: React.FC<SettingsLinkProps> = ({
     <Pressable
       style={({ pressed }) => [
         styles.container,
-        { backgroundColor: colors.card, opacity: pressed ? 0.7 : 1 },
+        { backgroundColor: colors.cardBackground, opacity: pressed ? 0.7 : 1 },
       ]}
       onPress={onPress}
     >
@@ -57,16 +58,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 8,
+    padding: SPACING.lg,
+    borderRadius: RADIUS.md,
+    marginBottom: SPACING.sm,
   },
   leftSection: {
     flexDirection: "row",
     alignItems: "center",
   },
   icon: {
-    marginRight: 12,
+    marginRight: SPACING.md,
   },
   label: {
     fontSize: 16,

@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { RADIUS, SPACING } from "../constants";
 import { useTheme } from "../hooks";
 import { useNotesStore } from "../store";
 import { Note } from "../types";
@@ -32,7 +33,9 @@ export const TrashNoteItem: React.FC<TrashNoteItemProps> = ({ note }) => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.card }]}>
+    <View
+      style={[styles.container, { backgroundColor: colors.cardBackground }]}
+    >
       <Text style={[styles.content, { color: colors.text }]} numberOfLines={2}>
         {truncateText(note.content, 50)}
       </Text>
@@ -58,25 +61,25 @@ export const TrashNoteItem: React.FC<TrashNoteItemProps> = ({ note }) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    borderRadius: RADIUS.md,
+    padding: SPACING.lg,
+    marginBottom: SPACING.md,
   },
   content: {
     fontSize: 14,
-    marginBottom: 12,
+    marginBottom: SPACING.md,
   },
   actions: {
     flexDirection: "row",
-    gap: 8,
+    gap: SPACING.sm,
   },
   actionButton: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 8,
-    gap: 4,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    borderRadius: RADIUS.sm,
+    gap: SPACING.xs,
   },
   deleteButton: {
     backgroundColor: "#666666",

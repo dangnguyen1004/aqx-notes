@@ -1,21 +1,20 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { CategorySummary, ScreenHeader } from "../../components";
-import { useTheme } from "../../hooks";
+import { ScrollView, StyleSheet } from "react-native";
+import {
+  CategorySummary,
+  GradientBackground,
+  ScreenHeader,
+} from "../../components";
+import { SPACING } from "../../constants";
 import { useCategoriesStore } from "../../store";
 
 export default function SummaryScreen() {
   const { t } = useTranslation();
-  const { colors } = useTheme();
   const { categories } = useCategoriesStore();
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      edges={["top"]}
-    >
+    <GradientBackground edges={["top"]}>
       <ScreenHeader title={t("summary.title")} />
 
       <ScrollView
@@ -27,19 +26,17 @@ export default function SummaryScreen() {
           <CategorySummary key={category.id} category={category} />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     flex: 1,
   },
   scrollContent: {
-    paddingHorizontal: 20,
+    paddingTop: SPACING.xl,
+    paddingHorizontal: SPACING.xl,
     paddingBottom: 30,
   },
 });

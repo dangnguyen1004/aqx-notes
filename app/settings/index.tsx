@@ -2,10 +2,20 @@ import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ScreenHeader, SettingsLink } from "../../components";
-import { EXTERNAL_URLS } from "../../constants";
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import {
+  GradientBackground,
+  ScreenHeader,
+  SettingsLink,
+} from "../../components";
+import { EXTERNAL_URLS, RADIUS, SPACING } from "../../constants";
 import { useTheme } from "../../hooks";
 import { useNotesStore, useSettingsStore } from "../../store";
 import { Language, ThemeMode } from "../../types";
@@ -65,7 +75,7 @@ export default function SettingsScreen() {
             styles.selectorOption,
             {
               backgroundColor:
-                theme === option.value ? colors.accent : colors.card,
+                theme === option.value ? colors.accent : colors.cardBackground,
             },
           ]}
           onPress={() => setTheme(option.value)}
@@ -92,7 +102,9 @@ export default function SettingsScreen() {
             styles.selectorOption,
             {
               backgroundColor:
-                language === option.value ? colors.accent : colors.card,
+                language === option.value
+                  ? colors.accent
+                  : colors.cardBackground,
             },
           ]}
           onPress={() => setLanguage(option.value)}
@@ -111,9 +123,7 @@ export default function SettingsScreen() {
   );
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.background }]}
-    >
+    <GradientBackground>
       <ScreenHeader title={t("settings.title")} showBack />
 
       <ScrollView
@@ -122,7 +132,12 @@ export default function SettingsScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Theme Section */}
-        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: colors.textSecondary, marginTop: 0 },
+          ]}
+        >
           {t("settings.theme")}
         </Text>
         <ThemeSelector />
@@ -167,8 +182,11 @@ export default function SettingsScreen() {
           label={t("settings.trash")}
           onPress={() => router.push("/settings/trash")}
         />
-
-        {/* Delete All Notes Button */}
+      </ScrollView>
+      {/* Delete All Notes Button */}
+      <View
+        style={[styles.actionContainer, { backgroundColor: colors.header }]}
+      >
         <Pressable
           style={[styles.deleteButton, { backgroundColor: colors.accent }]}
           onPress={handleDeleteAllNotes}
@@ -177,48 +195,47 @@ export default function SettingsScreen() {
             {t("settings.deleteAllNotes")}
           </Text>
         </Pressable>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     flex: 1,
   },
   scrollContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 40,
+    padding: SPACING.xl,
   },
   sectionTitle: {
     fontSize: 14,
     fontWeight: "600",
-    marginTop: 24,
-    marginBottom: 12,
+    marginTop: SPACING.xxl,
+    marginBottom: SPACING.md,
     textTransform: "uppercase",
   },
   selectorContainer: {
     flexDirection: "row",
-    gap: 8,
-    marginBottom: 8,
+    gap: SPACING.sm,
+    marginBottom: SPACING.sm,
   },
   selectorOption: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: SPACING.md,
+    borderRadius: RADIUS.sm,
     alignItems: "center",
   },
   selectorText: {
     fontSize: 14,
     fontWeight: "500",
   },
+  actionContainer: {
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.lg,
+  },
   deleteButton: {
-    marginTop: 32,
-    paddingVertical: 16,
-    borderRadius: 12,
+    paddingVertical: SPACING.md,
+    borderRadius: RADIUS.md,
     alignItems: "center",
   },
   deleteButtonText: {

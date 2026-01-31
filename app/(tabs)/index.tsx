@@ -3,8 +3,12 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { CategoryCard, ScreenHeader } from "../../components";
+import {
+  CategoryCard,
+  GradientBackground,
+  ScreenHeader,
+} from "../../components";
+import { SPACING } from "../../constants";
 import { useTheme } from "../../hooks";
 import { useCategoriesStore } from "../../store";
 
@@ -15,10 +19,7 @@ export default function HomeScreen() {
   const { categories } = useCategoriesStore();
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      edges={["top"]}
-    >
+    <GradientBackground edges={["top"]}>
       <ScreenHeader
         title={t("home.title")}
         rightAction={
@@ -53,23 +54,21 @@ export default function HomeScreen() {
           <CategoryCard key={category.id} category={category} />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     flex: 1,
   },
   scrollContent: {
-    paddingHorizontal: 20,
+    paddingTop: SPACING.xl,
+    paddingHorizontal: SPACING.xl,
     paddingBottom: 30,
   },
   recentSection: {
-    marginBottom: 32,
+    marginBottom: SPACING.xxxl,
   },
   recentHeader: {
     flexDirection: "row",

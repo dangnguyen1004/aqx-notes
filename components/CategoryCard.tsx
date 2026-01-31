@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { NOTES_PER_CATEGORY } from "../constants";
+import { NOTES_PER_CATEGORY, SPACING } from "../constants";
 import { useTheme } from "../hooks";
 import { useNotesStore } from "../store";
 import { Category } from "../types";
@@ -53,24 +53,24 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 24,
+    marginBottom: SPACING.xxl,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 8,
+    marginBottom: SPACING.sm,
   },
   titleRow: {
     flexDirection: "row",
     alignItems: "center",
   },
   icon: {
-    fontSize: 24,
-    marginBottom: 12,
-    marginLeft: 4,
+    fontSize: 20,
+    marginLeft: SPACING.xs,
   },
   title: {
+    marginLeft: SPACING.xs,
     fontSize: 16,
     fontWeight: "600",
   },
@@ -80,6 +80,6 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 14,
     fontStyle: "italic",
-    marginLeft: 4,
+    marginLeft: SPACING.xs,
   },
 });

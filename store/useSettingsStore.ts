@@ -1,8 +1,8 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ThemeMode, Language } from '../types';
-import { changeLanguage } from '../i18n';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+import { changeLanguage } from "../i18n";
+import { Language, ThemeMode } from "../types";
 
 interface SettingsState {
   theme: ThemeMode;
@@ -14,8 +14,8 @@ interface SettingsState {
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
-      theme: 'auto',
-      language: 'en',
+      theme: "dark",
+      language: "en",
 
       setTheme: (theme: ThemeMode) => {
         set({ theme });
@@ -27,7 +27,7 @@ export const useSettingsStore = create<SettingsState>()(
       },
     }),
     {
-      name: 'aqx-settings-storage',
+      name: "aqx-settings-storage",
       storage: createJSONStorage(() => AsyncStorage),
       onRehydrateStorage: () => (state) => {
         if (state?.language) {

@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { RADIUS, SPACING } from "../constants";
 import { useTheme } from "../hooks";
 import { useNotesStore } from "../store";
 import { Category } from "../types";
@@ -23,10 +24,15 @@ export const CategorySummary: React.FC<CategorySummaryProps> = ({
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.card }]}>
+    <View
+      style={[styles.container, { backgroundColor: colors.cardBackground }]}
+    >
       <View style={styles.leftSection}>
         <View
-          style={[styles.iconContainer, { backgroundColor: colors.background }]}
+          style={[
+            styles.iconContainer,
+            { backgroundColor: colors.cardBackground },
+          ]}
         >
           <Text style={styles.icon}>{category.icon}</Text>
         </View>
@@ -54,9 +60,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    borderRadius: RADIUS.md,
+    padding: SPACING.lg,
+    marginBottom: SPACING.md,
   },
   leftSection: {
     flexDirection: "row",
@@ -66,10 +72,10 @@ const styles = StyleSheet.create({
   iconContainer: {
     width: 48,
     height: 48,
-    borderRadius: 24,
+    borderRadius: RADIUS.xxl,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 12,
+    marginRight: SPACING.md,
   },
   icon: {
     fontSize: 24,
@@ -80,15 +86,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "600",
-    marginBottom: 4,
+    marginBottom: SPACING.xs,
   },
   count: {
     fontSize: 12,
   },
   detailButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.sm,
+    borderRadius: RADIUS.xl,
   },
   detailText: {
     color: "#ffffff",

@@ -1,9 +1,9 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useTheme } from "../hooks";
 import "../i18n";
 import { useCategoriesStore, useSettingsStore } from "../store";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
   // Hydrate stores
