@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import {
   Button,
+  Dropdown,
   GradientBackground,
   ScreenHeader,
   SettingsLink,
@@ -94,35 +95,6 @@ export default function SettingsScreen() {
     </View>
   );
 
-  const LanguageSelector = () => (
-    <View style={styles.selectorContainer}>
-      {languageOptions.map((option) => (
-        <Pressable
-          key={option.value}
-          style={[
-            styles.selectorOption,
-            {
-              backgroundColor:
-                language === option.value
-                  ? colors.accent
-                  : colors.cardBackground,
-            },
-          ]}
-          onPress={() => setLanguage(option.value)}
-        >
-          <Text
-            style={[
-              styles.selectorText,
-              { color: language === option.value ? "#ffffff" : colors.text },
-            ]}
-          >
-            {option.label}
-          </Text>
-        </Pressable>
-      ))}
-    </View>
-  );
-
   return (
     <GradientBackground>
       <ScreenHeader title={t("settings.title")} showBack />
@@ -147,7 +119,11 @@ export default function SettingsScreen() {
         <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
           {t("settings.language")}
         </Text>
-        <LanguageSelector />
+        <Dropdown
+          options={languageOptions}
+          value={language}
+          onChange={setLanguage}
+        />
 
         {/* Links Section */}
         <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>

@@ -1,5 +1,7 @@
 export { Button } from "./Button";
 export { CategoryCard } from "./CategoryCard";
+export { Dropdown } from "./Dropdown";
+export type { DropdownOption } from "./Dropdown";
 export { CategorySummary } from "./CategorySummary";
 export { EditCategoryModal } from "./EditCategoryModal";
 export { GradientBackground } from "./GradientBackground";
