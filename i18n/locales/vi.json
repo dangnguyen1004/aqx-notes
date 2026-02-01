@@ -67,7 +67,9 @@
     "noteCount_one": "{{count}} ghi chú",
     "noteCount_other": "{{count}} ghi chú",
     "emptyNotes": "Không có ghi chú trong danh mục này",
-    "editCategory": "Chỉnh sửa danh mục"
+    "editCategory": "Chỉnh sửa danh mục",
+    "deleteAllTitle": "Xóa tất cả ghi chú",
+    "deleteAllMessage": "Bạn có chắc chắn muốn xóa tất cả {{count}} ghi chú trong danh mục này? Chúng sẽ được chuyển vào thùng rác."
   },
   "editCategory": {
     "title": "Chỉnh sửa danh mục",

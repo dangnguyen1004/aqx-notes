@@ -2,7 +2,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import {
   Button,
   EditCategoryModal,
@@ -23,8 +30,12 @@ export default function CategoryDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
 
   const { getCategoryById, updateCategory } = useCategoriesStore();
-  const { getNotesByCategory, getNotesCountByCategory, softDeleteNote } =
-    useNotesStore();
+  const {
+    getNotesByCategory,
+    getNotesCountByCategory,
+    softDeleteNote,
+    softDeleteNotesByCategory,
+  } = useNotesStore();
 
   const [editModalVisible, setEditModalVisible] = useState(false);
 
@@ -68,6 +79,26 @@ export default function CategoryDetailScreen() {
     });
   };
 
+  const handleDeleteAllNotes = () => {
+    if (noteCount === 0) return;
+
+    Alert.alert(
+      t("categoryDetail.deleteAllTitle"),
+      t("categoryDetail.deleteAllMessage", { count: noteCount }),
+      [
+        {
+          text: t("common.cancel"),
+          style: "cancel",
+        },
+        {
+          text: t("common.delete"),
+          style: "destructive",
+          onPress: () => softDeleteNotesByCategory(category.id),
+        },
+      ],
+    );
+  };
+
   const renderNoteItem = ({ item }: { item: Note }) => (
     <SwipeableNoteItem note={item} onDelete={handleDeleteNote} />
   );
@@ -91,9 +122,21 @@ export default function CategoryDetailScreen() {
         title={headerTitle}
         showBack
         rightAction={
-          <Pressable onPress={() => setEditModalVisible(true)}>
-            <Ionicons name="pencil-outline" size={24} color={colors.accent} />
-          </Pressable>
+          <View style={{ flexDirection: "row", gap: 16 }}>
+            <Pressable onPress={() => setEditModalVisible(true)}>
+              <Ionicons name="pencil-outline" size={24} color={colors.accent} />
+            </Pressable>
+            <Pressable
+              onPress={handleDeleteAllNotes}
+              disabled={noteCount === 0}
+            >
+              <Ionicons
+                name="trash-outline"
+                size={24}
+                color={noteCount === 0 ? colors.textSecondary : "#FF4444"}
+              />
+            </Pressable>
+          </View>
         }
       />
 

@@ -67,7 +67,9 @@
     "noteCount_one": "{{count}} note",
     "noteCount_other": "{{count}} notes",
     "emptyNotes": "No notes in this category",
-    "editCategory": "Edit Category"
+    "editCategory": "Edit Category",
+    "deleteAllTitle": "Delete All Notes",
+    "deleteAllMessage": "Are you sure you want to delete all {{count}} notes in this category? They will be moved to trash."
   },
   "editCategory": {
     "title": "Edit Category",

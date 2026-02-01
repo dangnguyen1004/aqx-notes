@@ -9,6 +9,7 @@ interface NotesState {
   addNote: (content: string, categoryId: string) => void;
   updateNote: (id: string, content: string) => void;
   softDeleteNote: (id: string) => void;
+  softDeleteNotesByCategory: (categoryId: string) => void;
   restoreNote: (id: string) => void;
   permanentlyDeleteNote: (id: string) => void;
   emptyTrash: () => void;
@@ -42,7 +43,7 @@ export const useNotesStore = create<NotesState>()(
       updateNote: (id: string, content: string) => {
         set((state) => ({
           notes: state.notes.map((note) =>
-            note.id === id ? { ...note, content, updatedAt: Date.now() } : note
+            note.id === id ? { ...note, content, updatedAt: Date.now() } : note,
           ),
         }));
       },
@@ -52,7 +53,18 @@ export const useNotesStore = create<NotesState>()(
           notes: state.notes.map((note) =>
             note.id === id
               ? { ...note, isDeleted: true, deletedAt: Date.now() }
-              : note
+              : note,
+          ),
+        }));
+      },
+
+      softDeleteNotesByCategory: (categoryId: string) => {
+        const now = Date.now();
+        set((state) => ({
+          notes: state.notes.map((note) =>
+            note.categoryId === categoryId && !note.isDeleted
+              ? { ...note, isDeleted: true, deletedAt: now }
+              : note,
           ),
         }));
       },
@@ -62,7 +74,7 @@ export const useNotesStore = create<NotesState>()(
           notes: state.notes.map((note) =>
             note.id === id
               ? { ...note, isDeleted: false, deletedAt: undefined }
-              : note
+              : note,
           ),
         }));
       },
@@ -83,7 +95,9 @@ export const useNotesStore = create<NotesState>()(
         const now = Date.now();
         set((state) => ({
           notes: state.notes.map((note) =>
-            note.isDeleted ? note : { ...note, isDeleted: true, deletedAt: now }
+            note.isDeleted
+              ? note
+              : { ...note, isDeleted: true, deletedAt: now },
           ),
         }));
       },
@@ -99,7 +113,7 @@ export const useNotesStore = create<NotesState>()(
       getNotesByCategory: (categoryId: string) => {
         return get()
           .notes.filter(
-            (note) => note.categoryId === categoryId && !note.isDeleted
+            (note) => note.categoryId === categoryId && !note.isDeleted,
           )
           .sort((a, b) => b.updatedAt - a.updatedAt);
       },
@@ -119,6 +133,6 @@ export const useNotesStore = create<NotesState>()(
     {
       name: "aqx-notes-storage",
       storage: createJSONStorage(() => AsyncStorage),
-    }
-  )
+    },
+  ),
 );
