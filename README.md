@@ -1,116 +1,95 @@
 # AQX Notes
 
-A React Native notes application built with Expo, featuring categories, multi-language support, and theme customization.
+A React Native notes app with categories, multi-language support, and theme customization.
+
+## 📱 Try it Now with Expo Go
+
+**No setup required!** Scan this QR code with Expo Go to preview the app instantly:
+
+👉 **[Open in Expo Go](https://expo.dev/preview/update?message=ci%3A+test+update+workflow&updateRuntimeVersion=1.0.0&createdAt=2026-02-01T06%3A58%3A02.642Z&slug=exp&projectId=8082d5c5-2b35-4b15-a805-11ca66675683&group=0d384f55-ed6a-43a5-b87a-7be2e0ccb1db)**
+
+1. Install [Expo Go](https://expo.dev/go) on your phone
+2. Click the link above or scan the QR code on the page
+3. The app will load automatically
+
+---
+
+## Run Locally
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+
+### Quick Start
+```bash
+npm install
+npx expo start
+```
+Scan the QR code with Expo Go (Android) or Camera app (iOS).
+
+---
 
 ## Features
 
-- **Notes Management**: Create, view, and delete notes organized by categories
-- **Categories**: Work and Study, Life, Health and Well-being
-- **Soft Delete**: Deleted notes go to trash and can be restored
-- **Multi-language**: English and Vietnamese support (auto-detects device language)
-- **Theme Support**: Light, Dark, and Auto (follows system) modes
-- **Deep Linking**: Open specific notes via `aqxnotes://note/[id]`
-- **Persistent Storage**: Notes and settings persist across app restarts
+- **Notes by Categories** - Organize notes into Work, Life, Health categories
+- **Soft Delete & Restore** - Deleted notes go to trash, can be restored
+- **Multi-language** - English & Vietnamese (auto-detects device language)
+- **Theme Support** - Light, Dark, Auto modes
+- **Deep Linking** - Open notes via `aqxnotes://note/[id]`
+- **Persistent Storage** - Data survives app restarts
+
+---
 
 ## Tech Stack
 
-- **Framework**: Expo SDK 54
-- **Language**: TypeScript
-- **Navigation**: Expo Router 6 (file-based routing)
-- **State Management**: Zustand with AsyncStorage persistence
-- **Internationalization**: react-i18next + expo-localization
-- **Styling**: React Native StyleSheet
+| Category | Technology |
+|----------|------------|
+| Framework | Expo SDK 54, React Native 0.81.5 |
+| Language | TypeScript (strict mode) |
+| Navigation | Expo Router v6 (file-based) |
+| State | Zustand v5 + AsyncStorage |
+| i18n | i18next + expo-localization |
 
-## Runtime Environment
+---
 
-- **Node.js**: 18.x or higher
-- **Expo SDK**: 54.0.32
-- **React**: 19.1.0
-- **React Native**: 0.81.5
+## CI/CD
 
-## Dependencies
+- **EAS Build** - Automated builds on push to master
+- **OTA Updates** - Instant updates via Expo Updates (no app store review)
+- **Preview Builds** - Test any branch with Expo Go
 
-| Package | Version |
-|---------|---------|
-| expo | ~54.0.32 |
-| expo-router | ~6.0.22 |
-| expo-localization | ~17.0.8 |
-| expo-linking | ~8.0.11 |
-| zustand | ^5.0.10 |
-| react-i18next | ^16.5.4 |
-| i18next | ^25.8.0 |
-| @react-native-async-storage/async-storage | 2.2.0 |
-| @expo/vector-icons | - |
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18.x or higher
-- npm or yarn
-- Expo Go app on your mobile device (for testing)
-
-### Installation
-
-```bash
-# Install dependencies
-npm install
-
-# Start the development server
-npx expo start
-```
-
-### Running the App
-
-1. Start the development server: `npx expo start`
-2. Scan the QR code with:
-   - **iOS**: Camera app or Expo Go
-   - **Android**: Expo Go app
+---
 
 ## Project Structure
 
 ```
 aqx-notes/
-├── app/                    # Screens (Expo Router)
-│   ├── (tabs)/            # Tab screens (Home, Summary)
-│   ├── settings/          # Settings screens
-│   ├── note/              # Note detail screen
-│   └── new-note.tsx       # New note screen
-├── components/            # Reusable UI components
-├── store/                 # Zustand stores
-├── i18n/                  # Internationalization
-├── providers/             # React context providers
-├── hooks/                 # Custom hooks
-├── constants/             # App constants
-├── types/                 # TypeScript types
-└── utils/                 # Utility functions
+├── app/                 # Screens (Expo Router)
+│   ├── (tabs)/          # Tab screens (Home, Summary)
+│   ├── settings/        # Settings screens
+│   └── note/            # Note detail screen
+├── components/          # Reusable UI components
+├── store/               # Zustand stores
+├── i18n/                # Translations (en, vi)
+├── hooks/               # Custom React hooks
+├── constants/           # Design tokens
+└── types/               # TypeScript interfaces
 ```
+
+---
 
 ## Deep Linking
 
-Test deep links with:
-
 ```bash
-# iOS Simulator
+# Test on iOS Simulator
 npx uri-scheme open aqxnotes://note/[note-id] --ios
 
-# Android Emulator
+# Test on Android Emulator
 npx uri-scheme open aqxnotes://note/[note-id] --android
 ```
 
-## Building for Production
-
-```bash
-# Build for iOS
-npx expo build:ios
-
-# Build for Android
-npx expo build:android
-
-# Or use EAS Build
-npx eas build
-```
+---
 
 ## License
 
-This project is created for interview assessment purposes.
+Created for interview assessment purposes.
