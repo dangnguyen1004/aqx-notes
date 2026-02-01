@@ -1,20 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
-  Alert,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import {
+  Button,
   GradientBackground,
   ScreenHeader,
   TrashNoteItem,
 } from "../../components";
-import { RADIUS, SPACING } from "../../constants";
+import { SPACING } from "../../constants";
 import { useTheme } from "../../hooks";
 import { useNotesStore } from "../../store";
 
@@ -73,12 +67,7 @@ export default function TrashScreen() {
             { backgroundColor: colors.background },
           ]}
         >
-          <Pressable
-            style={[styles.emptyButton, { backgroundColor: colors.accent }]}
-            onPress={handleEmptyTrash}
-          >
-            <Text style={styles.emptyButtonText}>{t("common.emptyTrash")}</Text>
-          </Pressable>
+          <Button title={t("common.emptyTrash")} onPress={handleEmptyTrash} />
         </View>
       )}
     </GradientBackground>
@@ -105,15 +94,5 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     marginTop: SPACING.lg,
-  },
-  emptyButton: {
-    paddingVertical: SPACING.md,
-    borderRadius: RADIUS.md,
-    alignItems: "center",
-  },
-  emptyButtonText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "600",
   },
 });

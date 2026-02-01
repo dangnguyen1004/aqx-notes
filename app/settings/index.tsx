@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import {
+  Button,
   GradientBackground,
   ScreenHeader,
   SettingsLink,
@@ -187,14 +188,10 @@ export default function SettingsScreen() {
       <View
         style={[styles.actionContainer, { backgroundColor: colors.header }]}
       >
-        <Pressable
-          style={[styles.deleteButton, { backgroundColor: colors.accent }]}
+        <Button
+          title={t("settings.deleteAllNotes")}
           onPress={handleDeleteAllNotes}
-        >
-          <Text style={styles.deleteButtonText}>
-            {t("settings.deleteAllNotes")}
-          </Text>
-        </Pressable>
+        />
       </View>
     </GradientBackground>
   );
@@ -232,15 +229,5 @@ const styles = StyleSheet.create({
   actionContainer: {
     paddingHorizontal: SPACING.xl,
     paddingVertical: SPACING.lg,
-  },
-  deleteButton: {
-    paddingVertical: SPACING.md,
-    borderRadius: RADIUS.md,
-    alignItems: "center",
-  },
-  deleteButtonText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "600",
   },
 });

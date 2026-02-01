@@ -10,7 +10,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { GradientBackground, ScreenHeader } from "../components";
+import { Button, GradientBackground, ScreenHeader } from "../components";
 import { NOTE_MAX_LENGTH, RADIUS, SPACING } from "../constants";
 import { useTheme } from "../hooks";
 import { useCategoriesStore, useNotesStore } from "../store";
@@ -140,18 +140,14 @@ export default function NewNoteScreen() {
             })}
           </Text>
         </View>
-
-        <Pressable
-          style={[
-            styles.saveButton,
-            { backgroundColor: canSave ? colors.accent : colors.textSecondary },
-          ]}
+      </ScrollView>
+      <View style={[styles.footer, { backgroundColor: colors.background }]}>
+        <Button
+          title={t("common.save")}
           onPress={handleSave}
           disabled={!canSave}
-        >
-          <Text style={styles.saveButtonText}>{t("common.save")}</Text>
-        </Pressable>
-      </ScrollView>
+        />
+      </View>
     </GradientBackground>
   );
 }
@@ -210,15 +206,9 @@ const styles = StyleSheet.create({
     textAlign: "right",
     marginTop: SPACING.sm,
   },
-  saveButton: {
-    marginTop: SPACING.xxl,
+
+  footer: {
+    paddingHorizontal: SPACING.xl,
     paddingVertical: SPACING.lg,
-    borderRadius: RADIUS.md,
-    alignItems: "center",
-  },
-  saveButtonText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "600",
   },
 });
