@@ -6,6 +6,7 @@ import {
   Alert,
   Pressable,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   TextInput,
@@ -67,6 +68,23 @@ export default function NoteDetailScreen() {
     setIsEditing(false);
   };
 
+  const handleShare = async () => {
+    if (!note) return;
+
+    const deepLink = `aqxnotes://note/${id}`;
+    const preview =
+      note.content.slice(0, 100) + (note.content.length > 100 ? "..." : "");
+
+    try {
+      await Share.share({
+        message: `${preview}\n\n${t("noteDetail.openInApp")}: ${deepLink}`,
+        title: t("noteDetail.shareTitle"),
+      });
+    } catch (error) {
+      console.error("Share error:", error);
+    }
+  };
+
   if (!note) {
     return (
       <GradientBackground>
@@ -116,6 +134,13 @@ export default function NoteDetailScreen() {
             </Pressable>
           ) : (
             <View style={styles.actionRow}>
+              <Pressable onPress={handleShare}>
+                <Ionicons
+                  name="share-outline"
+                  size={24}
+                  color={colors.accent}
+                />
+              </Pressable>
               <Pressable onPress={handleEdit}>
                 <Ionicons
                   name="pencil-outline"

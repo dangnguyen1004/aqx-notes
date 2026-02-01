@@ -50,7 +50,9 @@
     "title": "Ghi chú",
     "category": "Danh mục",
     "createdAt": "Ngày tạo",
-    "deleteConfirm": "Bạn có chắc chắn muốn xóa ghi chú này?"
+    "deleteConfirm": "Bạn có chắc chắn muốn xóa ghi chú này?",
+    "shareTitle": "Chia sẻ ghi chú",
+    "openInApp": "Mở trong AQX Notes"
   },
   "categories": {
     "workAndStudy": "Công việc và Học tập",

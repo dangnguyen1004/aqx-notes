@@ -15,7 +15,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.aqx.notes"
+      "bundleIdentifier": "com.aqx.notes",
+      "associatedDomains": [
+        "applinks:aqxnotes.app",
+        "applinks:www.aqxnotes.app"
+      ]
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +27,26 @@
         "backgroundColor": "#1a1a2e"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.aqx.notes"
+      "package": "com.aqx.notes",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "aqxnotes.app",
+              "pathPrefix": "/note"
+            },
+            {
+              "scheme": "https",
+              "host": "www.aqxnotes.app",
+              "pathPrefix": "/note"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",

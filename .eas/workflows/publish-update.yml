@@ -2,11 +2,11 @@ name: Publish update
 
 on:
   push:
-    branches: ['master']
 
 jobs:
   update:
     name: Update
     type: update
+    if: ${{ contains(github.event.head_commit.message, '[ci build]') }}
     params:
-      branch: ${{ github.ref_name || 'master'}}
+      branch: ${{ github.ref_name || ''}}
