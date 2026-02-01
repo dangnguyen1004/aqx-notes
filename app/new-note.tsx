@@ -3,6 +3,8 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -43,111 +45,125 @@ export default function NewNoteScreen() {
   const canSave = content.trim().length > 0 && selectedCategoryId;
 
   return (
-    <GradientBackground>
+    <GradientBackground edges={["top", "left", "right"]}>
       <ScreenHeader title={t("newNote.title")} showBack />
 
-      <ScrollView
-        style={styles.content}
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
       >
-        <Text style={[styles.label, { color: colors.textSecondary }]}>
-          {t("newNote.chooseCategory")}
-        </Text>
-
-        <Pressable
-          style={[
-            styles.categorySelector,
-            { backgroundColor: colors.cardBackground },
-          ]}
-          onPress={() => setShowCategoryPicker(!showCategoryPicker)}
+        <ScrollView
+          style={styles.content}
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
         >
-          <View style={styles.categoryDisplay}>
-            {selectedCategory && (
-              <>
-                <Text style={styles.categoryIcon}>{selectedCategory.icon}</Text>
-                <Text style={[styles.categoryText, { color: colors.text }]}>
-                  {getCatDisplayLabel(selectedCategory, t)}
-                </Text>
-              </>
-            )}
-          </View>
-          <Ionicons
-            name={showCategoryPicker ? "chevron-up" : "chevron-down"}
-            size={20}
-            color={colors.textSecondary}
-          />
-        </Pressable>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>
+            {t("newNote.chooseCategory")}
+          </Text>
 
-        {showCategoryPicker && (
+          <Pressable
+            style={[
+              styles.categorySelector,
+              { backgroundColor: colors.cardBackground },
+            ]}
+            onPress={() => setShowCategoryPicker(!showCategoryPicker)}
+          >
+            <View style={styles.categoryDisplay}>
+              {selectedCategory && (
+                <>
+                  <Text style={styles.categoryIcon}>
+                    {selectedCategory.icon}
+                  </Text>
+                  <Text style={[styles.categoryText, { color: colors.text }]}>
+                    {getCatDisplayLabel(selectedCategory, t)}
+                  </Text>
+                </>
+              )}
+            </View>
+            <Ionicons
+              name={showCategoryPicker ? "chevron-up" : "chevron-down"}
+              size={20}
+              color={colors.textSecondary}
+            />
+          </Pressable>
+
+          {showCategoryPicker && (
+            <View
+              style={[
+                styles.categoryList,
+                { backgroundColor: colors.cardBackground },
+              ]}
+            >
+              {categories.map((category) => (
+                <Pressable
+                  key={category.id}
+                  style={[
+                    styles.categoryOption,
+                    selectedCategoryId === category.id && {
+                      backgroundColor: colors.accent + "20",
+                    },
+                  ]}
+                  onPress={() => {
+                    setSelectedCategoryId(category.id);
+                    setShowCategoryPicker(false);
+                  }}
+                >
+                  <Text style={styles.categoryIcon}>{category.icon}</Text>
+                  <Text style={[styles.categoryText, { color: colors.text }]}>
+                    {getCatDisplayLabel(category, t)}
+                  </Text>
+                  {selectedCategoryId === category.id && (
+                    <Ionicons
+                      name="checkmark"
+                      size={20}
+                      color={colors.accent}
+                    />
+                  )}
+                </Pressable>
+              ))}
+            </View>
+          )}
+
+          <Text
+            style={[
+              styles.label,
+              { color: colors.textSecondary, marginTop: 20 },
+            ]}
+          >
+            {t("newNote.placeholder")}
+          </Text>
           <View
             style={[
-              styles.categoryList,
+              styles.inputContainer,
               { backgroundColor: colors.cardBackground },
             ]}
           >
-            {categories.map((category) => (
-              <Pressable
-                key={category.id}
-                style={[
-                  styles.categoryOption,
-                  selectedCategoryId === category.id && {
-                    backgroundColor: colors.accent + "20",
-                  },
-                ]}
-                onPress={() => {
-                  setSelectedCategoryId(category.id);
-                  setShowCategoryPicker(false);
-                }}
-              >
-                <Text style={styles.categoryIcon}>{category.icon}</Text>
-                <Text style={[styles.categoryText, { color: colors.text }]}>
-                  {getCatDisplayLabel(category, t)}
-                </Text>
-                {selectedCategoryId === category.id && (
-                  <Ionicons name="checkmark" size={20} color={colors.accent} />
-                )}
-              </Pressable>
-            ))}
+            <TextInput
+              style={[styles.input, { color: colors.text }]}
+              placeholder={t("newNote.placeholder")}
+              placeholderTextColor={colors.textSecondary}
+              multiline
+              maxLength={NOTE_MAX_LENGTH}
+              value={content}
+              onChangeText={setContent}
+              textAlignVertical="top"
+            />
+            <Text style={[styles.charCount, { color: colors.textSecondary }]}>
+              {t("newNote.characterCount", {
+                count: content.length,
+                max: NOTE_MAX_LENGTH,
+              })}
+            </Text>
           </View>
-        )}
-
-        <Text
-          style={[styles.label, { color: colors.textSecondary, marginTop: 20 }]}
-        >
-          {t("newNote.placeholder")}
-        </Text>
-        <View
-          style={[
-            styles.inputContainer,
-            { backgroundColor: colors.cardBackground },
-          ]}
-        >
-          <TextInput
-            style={[styles.input, { color: colors.text }]}
-            placeholder={t("newNote.placeholder")}
-            placeholderTextColor={colors.textSecondary}
-            multiline
-            maxLength={NOTE_MAX_LENGTH}
-            value={content}
-            onChangeText={setContent}
-            textAlignVertical="top"
+        </ScrollView>
+        <View style={[styles.footer, { backgroundColor: colors.background }]}>
+          <Button
+            title={t("common.save")}
+            onPress={handleSave}
+            disabled={!canSave}
           />
-          <Text style={[styles.charCount, { color: colors.textSecondary }]}>
-            {t("newNote.characterCount", {
-              count: content.length,
-              max: NOTE_MAX_LENGTH,
-            })}
-          </Text>
         </View>
-      </ScrollView>
-      <View style={[styles.footer, { backgroundColor: colors.background }]}>
-        <Button
-          title={t("common.save")}
-          onPress={handleSave}
-          disabled={!canSave}
-        />
-      </View>
+      </KeyboardAvoidingView>
     </GradientBackground>
   );
 }
@@ -210,5 +226,6 @@ const styles = StyleSheet.create({
   footer: {
     paddingHorizontal: SPACING.xl,
     paddingVertical: SPACING.lg,
+    paddingBottom: Platform.OS === "ios" ? SPACING.xxl : SPACING.lg,
   },
 });
