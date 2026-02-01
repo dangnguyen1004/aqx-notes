@@ -2,6 +2,7 @@ name: Publish update
 
 on:
   push:
+    branches: ['*']
 
 jobs:
   update:
