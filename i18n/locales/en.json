@@ -60,5 +60,20 @@
   "languages": {
     "en": "English",
     "vi": "Tiếng Việt"
+  },
+  "categoryDetail": {
+    "title": "Category",
+    "addNote": "Add New Note",
+    "noteCount_one": "{{count}} note",
+    "noteCount_other": "{{count}} notes",
+    "emptyNotes": "No notes in this category",
+    "editCategory": "Edit Category"
+  },
+  "editCategory": {
+    "title": "Edit Category",
+    "labelPlaceholder": "Category name",
+    "selectIcon": "Select Icon",
+    "save": "Save",
+    "cancel": "Cancel"
   }
 }

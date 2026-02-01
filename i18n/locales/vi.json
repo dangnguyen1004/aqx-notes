@@ -60,5 +60,20 @@
   "languages": {
     "en": "English",
     "vi": "Tiếng Việt"
+  },
+  "categoryDetail": {
+    "title": "Danh mục",
+    "addNote": "Thêm ghi chú mới",
+    "noteCount_one": "{{count}} ghi chú",
+    "noteCount_other": "{{count}} ghi chú",
+    "emptyNotes": "Không có ghi chú trong danh mục này",
+    "editCategory": "Chỉnh sửa danh mục"
+  },
+  "editCategory": {
+    "title": "Chỉnh sửa danh mục",
+    "labelPlaceholder": "Tên danh mục",
+    "selectIcon": "Chọn biểu tượng",
+    "save": "Lưu",
+    "cancel": "Hủy"
   }
 }

@@ -1,7 +1,10 @@
+export { Button } from "./Button";
 export { CategoryCard } from "./CategoryCard";
 export { CategorySummary } from "./CategorySummary";
+export { EditCategoryModal } from "./EditCategoryModal";
 export { GradientBackground } from "./GradientBackground";
 export { NoteItem } from "./NoteItem";
 export { ScreenHeader } from "./ScreenHeader";
 export { SettingsLink } from "./SettingsLink";
+export { SwipeableNoteItem } from "./SwipeableNoteItem";
 export { TrashNoteItem } from "./TrashNoteItem";

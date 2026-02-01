@@ -1,10 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useRouter } from "expo-router";
 import { RADIUS, SPACING } from "../constants";
 import { useTheme } from "../hooks";
 import { useNotesStore } from "../store";
 import { Category } from "../types";
+import { getCatDisplayLabel } from "../utils";
 
 interface CategorySummaryProps {
   category: Category;
@@ -15,12 +17,13 @@ export const CategorySummary: React.FC<CategorySummaryProps> = ({
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const router = useRouter();
   const { getNotesCountByCategory } = useNotesStore();
 
   const count = getNotesCountByCategory(category.id);
 
   const onPress = () => {
-    // TODO: Navigate to category details screen
+    router.push(`/category/${category.id}`);
   };
 
   return (
@@ -38,7 +41,7 @@ export const CategorySummary: React.FC<CategorySummaryProps> = ({
         </View>
         <View style={styles.textContainer}>
           <Text style={[styles.title, { color: colors.text }]}>
-            {t(category.labelKey)}
+            {getCatDisplayLabel(category, t)}
           </Text>
           <Text style={[styles.count, { color: colors.textSecondary }]}>
             {t("summary.totalRecords", { count })}

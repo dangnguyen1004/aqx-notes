@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -14,17 +14,19 @@ import { GradientBackground, ScreenHeader } from "../components";
 import { NOTE_MAX_LENGTH, RADIUS, SPACING } from "../constants";
 import { useTheme } from "../hooks";
 import { useCategoriesStore, useNotesStore } from "../store";
+import { getCatDisplayLabel } from "../utils";
 
 export default function NewNoteScreen() {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const router = useRouter();
+  const { categoryId } = useLocalSearchParams<{ categoryId?: string }>();
   const { categories } = useCategoriesStore();
   const { addNote } = useNotesStore();
 
   const [content, setContent] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
-    categories[0]?.id || null
+    categoryId || categories[0]?.id || null
   );
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
 
@@ -65,7 +67,7 @@ export default function NewNoteScreen() {
               <>
                 <Text style={styles.categoryIcon}>{selectedCategory.icon}</Text>
                 <Text style={[styles.categoryText, { color: colors.text }]}>
-                  {t(selectedCategory.labelKey)}
+                  {getCatDisplayLabel(selectedCategory, t)}
                 </Text>
               </>
             )}
@@ -100,7 +102,7 @@ export default function NewNoteScreen() {
               >
                 <Text style={styles.categoryIcon}>{category.icon}</Text>
                 <Text style={[styles.categoryText, { color: colors.text }]}>
-                  {t(category.labelKey)}
+                  {getCatDisplayLabel(category, t)}
                 </Text>
                 {selectedCategoryId === category.id && (
                   <Ionicons name="checkmark" size={20} color={colors.accent} />

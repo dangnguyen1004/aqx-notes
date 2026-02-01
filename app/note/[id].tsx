@@ -19,7 +19,7 @@ import {
   useNotesStore,
   useSettingsStore,
 } from "../../store";
-import { formatDate } from "../../utils";
+import { formatDate, getCatDisplayLabel } from "../../utils";
 
 export default function NoteDetailScreen() {
   const { t } = useTranslation();
@@ -150,7 +150,7 @@ export default function NoteDetailScreen() {
           >
             <Text style={styles.categoryIcon}>{category.icon}</Text>
             <Text style={[styles.categoryText, { color: colors.text }]}>
-              {t(category.labelKey)}
+              {getCatDisplayLabel(category, t)}
             </Text>
           </View>
         )}

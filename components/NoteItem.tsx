@@ -28,7 +28,7 @@ export const NoteItem: React.FC<NoteItemProps> = ({ note }) => {
       onPress={() => router.push(`/note/${note.id}`)}
     >
       <Text style={[styles.content, { color: colors.text }]} numberOfLines={2}>
-        {truncateText(note.content, 80)}
+        {truncateText(note.content)}
       </Text>
       <Ionicons name="chevron-forward" size={20} color="#e94560" />
     </Pressable>

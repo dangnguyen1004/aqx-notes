@@ -7,6 +7,7 @@ export interface Category {
   icon: string;
   createdAt: number;
   isDefault: boolean;
+  customLabel?: string;
 }
 
 export interface Note {

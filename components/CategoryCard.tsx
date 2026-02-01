@@ -1,3 +1,5 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -5,8 +7,8 @@ import { NOTES_PER_CATEGORY, SPACING } from "../constants";
 import { useTheme } from "../hooks";
 import { useNotesStore } from "../store";
 import { Category } from "../types";
+import { getCatDisplayLabel } from "../utils";
 import { NoteItem } from "./NoteItem";
-import { Ionicons } from "@expo/vector-icons";
 
 interface CategoryCardProps {
   category: Category;
@@ -15,12 +17,13 @@ interface CategoryCardProps {
 export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const router = useRouter();
   const { getLatestNotesByCategory } = useNotesStore();
 
   const latestNotes = getLatestNotesByCategory(category.id, NOTES_PER_CATEGORY);
 
   const onPress = () => {
-    // TODO: Navigate to category details screen
+    router.push(`/category/${category.id}`);
   };
 
   return (
@@ -29,7 +32,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
         <View style={styles.titleRow}>
           <Text style={styles.icon}>{category.icon}</Text>
           <Text style={[styles.title, { color: colors.text }]}>
-            {t(category.labelKey)}
+            {getCatDisplayLabel(category, t)}
           </Text>
         </View>
         <Ionicons
