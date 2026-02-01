@@ -6,7 +6,7 @@ A React Native notes app with categories, multi-language support, and theme cust
 
 **No setup required!** Scan this QR code with Expo Go to preview the app instantly:
 
-👉 **[Open in Expo Go](https://expo.dev/preview/update?message=ci%3A+test+update+workflow&updateRuntimeVersion=1.0.0&createdAt=2026-02-01T06%3A58%3A02.642Z&slug=exp&projectId=8082d5c5-2b35-4b15-a805-11ca66675683&group=0d384f55-ed6a-43a5-b87a-7be2e0ccb1db)**
+👉 **[Open in Expo Go](https://expo.dev/preview/update?message=ci%3A+update+%5Bci+build%5D&updateRuntimeVersion=1.0.0&createdAt=2026-02-01T08%3A23%3A21.059Z&slug=exp&projectId=8082d5c5-2b35-4b15-a805-11ca66675683&group=09ff72d9-2898-4931-863d-76a18e8d5898)**
 
 1. Install [Expo Go](https://expo.dev/go) on your phone
 2. Click the link above or scan the QR code on the page
