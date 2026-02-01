@@ -37,7 +37,7 @@ export const TrashNoteItem: React.FC<TrashNoteItemProps> = ({ note }) => {
       style={[styles.container, { backgroundColor: colors.cardBackground }]}
     >
       <Text style={[styles.content, { color: colors.text }]} numberOfLines={2}>
-        {truncateText(note.content, 50)}
+        {truncateText(note.content)}
       </Text>
       <View style={styles.actions}>
         <Button
